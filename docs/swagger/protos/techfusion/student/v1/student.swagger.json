@@ -1,0 +1,297 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Techfusion Student",
+    "version": "1.0",
+    "contact": {
+      "name": "Joseph Akitoye",
+      "url": "https://github.com/techfusion/student",
+      "email": "josephakitoye@gmail.com"
+    },
+    "license": {
+      "name": "BSD 3-Clause License",
+      "url": "https://github.com/shooters/address/LICENSE"
+    }
+  },
+  "tags": [
+    {
+      "name": "StudentService"
+    }
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/students": {
+      "get": {
+        "operationId": "StudentService_ListStudent",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListStudentResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "StudentService"
+        ]
+      },
+      "post": {
+        "operationId": "StudentService_CreateStudent",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1CreateStudentResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1CreateStudentRequest"
+            }
+          }
+        ],
+        "tags": [
+          "StudentService"
+        ]
+      }
+    },
+    "/v1/students/{id}": {
+      "get": {
+        "operationId": "StudentService_GetStudent",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GetStudentResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "StudentService"
+        ]
+      },
+      "delete": {
+        "operationId": "StudentService_DeleteStudent",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1DeleteStudentResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "StudentService"
+        ]
+      },
+      "put": {
+        "operationId": "StudentService_UpdateStudent",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1UpdateStudentResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "student": {
+                  "$ref": "#/definitions/v1StudentRequest"
+                }
+              }
+            }
+          }
+        ],
+        "tags": [
+          "StudentService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1CreateStudentRequest": {
+      "type": "object",
+      "properties": {
+        "student": {
+          "$ref": "#/definitions/v1StudentRequest"
+        }
+      }
+    },
+    "v1CreateStudentResponse": {
+      "type": "object",
+      "properties": {
+        "student": {
+          "$ref": "#/definitions/v1Student"
+        }
+      }
+    },
+    "v1DeleteStudentResponse": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "v1GetStudentResponse": {
+      "type": "object",
+      "properties": {
+        "student": {
+          "$ref": "#/definitions/v1Student"
+        }
+      }
+    },
+    "v1ListStudentResponse": {
+      "type": "object",
+      "properties": {
+        "students": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Student"
+          }
+        }
+      }
+    },
+    "v1Student": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "age": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "email": {
+          "type": "string"
+        }
+      }
+    },
+    "v1StudentRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "age": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "email": {
+          "type": "string"
+        }
+      }
+    },
+    "v1UpdateStudentResponse": {
+      "type": "object",
+      "properties": {
+        "student": {
+          "$ref": "#/definitions/v1Student"
+        }
+      }
+    }
+  }
+}

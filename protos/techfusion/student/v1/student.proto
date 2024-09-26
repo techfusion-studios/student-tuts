@@ -1,0 +1,106 @@
+syntax = "proto3";
+
+package protos.techfusion.student.v1;
+
+import "google/protobuf/timestamp.proto";
+import "protos/google/api/annotations.proto";
+import "protos/protoc-gen-swagger/annotations.proto";
+
+option go_package = "github.com/techfusion/student/v1;pb";
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+  info: {
+    title: "Techfusion Student";
+    version: "1.0";
+    contact: {
+      name: "Joseph Akitoye";
+      url: "https://github.com/techfusion/student";
+      email: "josephakitoye@gmail.com";
+    };
+    license: {
+      name: "BSD 3-Clause License";
+      url: "https://github.com/shooters/address/LICENSE";
+    };
+  };
+
+  schemes: HTTP;
+  schemes: HTTPS;
+  consumes: "application/json";
+  produces: "application/json";
+};
+
+message Student {
+  string id = 1;
+  string name = 2;
+  int32 age = 3;
+  string email = 4;
+  google.protobuf.Timestamp created_at = 5;
+}
+
+message StudentRequest {
+  string name = 1;
+  int32 age = 2;
+  string email = 3;
+}
+
+message CreateStudentRequest {
+  StudentRequest student = 1;
+}
+
+message CreateStudentResponse {
+  Student student = 1;
+}
+
+message GetStudentRequest {
+  string id = 1;
+}
+
+message GetStudentResponse {
+  Student student = 1;
+}
+
+message UpdateStudentRequest {
+  string id = 1;
+  StudentRequest student = 2;
+}
+
+message UpdateStudentResponse {
+  Student student = 1;
+}
+
+message DeleteStudentRequest {
+  string id = 1;
+}
+
+message DeleteStudentResponse {
+  string message = 1;
+}
+
+message ListStudentRequest {}
+
+message ListStudentResponse {
+  repeated Student students = 1;
+}
+
+service StudentService {
+  rpc ListStudent(ListStudentRequest) returns (ListStudentResponse) {
+    option (google.api.http) = {get: "/v1/students"};
+  }
+  rpc CreateStudent(CreateStudentRequest) returns (CreateStudentResponse) {
+    option (google.api.http) = {
+      post: "/v1/students",
+      body: "*"
+    };
+  }
+  rpc GetStudent(GetStudentRequest) returns (GetStudentResponse) {
+    option (google.api.http) = {get: "/v1/students/{id}"};
+  }
+  rpc UpdateStudent(UpdateStudentRequest) returns (UpdateStudentResponse) {
+    option (google.api.http) = {
+      put: "/v1/students/{id}",
+      body: "*"
+    };
+  }
+  rpc DeleteStudent(DeleteStudentRequest) returns (DeleteStudentResponse) {
+    option (google.api.http) = {delete: "/v1/students/{id}"};
+  }
+}
